@@ -9,9 +9,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+        appBarTheme: AppBarTheme(
+          color: Theme.of(context).primaryColor,
+          centerTitle: true,
+          scrolledUnderElevation: 7,
+        ),
+      ),
       title: 'RegX',
-      home: HomePage(),
+      home: const HomePage(),
     );
   }
 }
