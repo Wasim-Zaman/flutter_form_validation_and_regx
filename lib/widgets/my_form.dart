@@ -13,6 +13,7 @@ class _MyFormState extends State<MyForm> {
   final _formKey = GlobalKey<FormState>();
   final _phoneNode = FocusNode();
   final _passNode = FocusNode();
+  final _cnicNode = FocusNode();
   var _validRegX = false;
 
   @override
@@ -85,7 +86,7 @@ class _MyFormState extends State<MyForm> {
               keyboardType: TextInputType.phone,
               textInputAction: TextInputAction.next,
               onFieldSubmitted: (value) {
-                FocusScope.of(context).requestFocus(_passNode);
+                FocusScope.of(context).requestFocus(_cnicNode);
                 setState(() {});
               },
               autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -95,6 +96,32 @@ class _MyFormState extends State<MyForm> {
                 }
 
                 const pattern = r"^[+][9][2][3][0-9]{9}$";
+                final regX = RegExp(pattern);
+                if (!regX.hasMatch(value)) {
+                  _validRegX = false;
+                  return "Please enter valid number";
+                }
+                _validRegX = true;
+                return null;
+              },
+            ),
+            TextFormField(
+              decoration: const InputDecoration(
+                labelText: 'CNIC',
+                hintText: '11111-1111111-1',
+              ),
+              textInputAction: TextInputAction.next,
+              onFieldSubmitted: (value) {
+                FocusScope.of(context).requestFocus(_passNode);
+                setState(() {});
+              },
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return "Give correct CNIC format";
+                }
+
+                const pattern = r"^[0-9]{5}[-][0-9]{7}[-][0-9]$";
                 final regX = RegExp(pattern);
                 if (!regX.hasMatch(value)) {
                   _validRegX = false;
